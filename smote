@@ -1,0 +1,86 @@
+# ============================================
+# SMOTE for application_minus_bureau.csv
+# ============================================
+
+import pandas as pd  # type: ignore[import]
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from imblearn.over_sampling import SMOTE
+
+# Load dataset
+df = pd.read_csv("application_minus_bureau.csv")
+
+# --------------------------------------------
+# Separate features and target
+# --------------------------------------------
+# Change 'TARGET' if your target column has a different name
+target_column = "TARGET"
+
+X = df.drop(columns=[target_column])
+y = df[target_column]
+
+# --------------------------------------------
+# Encode categorical columns
+# --------------------------------------------
+label_encoders = {}
+
+for col in X.select_dtypes(include=['object']).columns:
+    le = LabelEncoder()
+    
+    # Fill missing values before encoding
+    X[col] = X[col].astype(str).fillna("Missing")
+    
+    X[col] = le.fit_transform(X[col])
+    label_encoders[col] = le
+
+# --------------------------------------------
+# Handle missing numerical values
+# --------------------------------------------
+for col in X.select_dtypes(include=['int64', 'float64']).columns:
+    X[col] = X[col].fillna(X[col].median())
+
+# --------------------------------------------
+# Train-Test Split
+# --------------------------------------------
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# --------------------------------------------
+# Apply SMOTE
+# --------------------------------------------
+smote = SMOTE(random_state=42)
+
+X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+
+# --------------------------------------------
+# Combine resampled data
+# --------------------------------------------
+train_smote_df = pd.concat(
+    [
+        pd.DataFrame(X_train_smote, columns=X.columns),
+        pd.DataFrame(y_train_smote, columns=[target_column])
+    ],
+    axis=1
+)
+
+# --------------------------------------------
+# Save SMOTE dataset
+# --------------------------------------------
+train_smote_df.to_csv("application_minus_bureau_smote.csv", index=False)
+
+# --------------------------------------------
+# Display results
+# --------------------------------------------
+print("Original class distribution:")
+print(y_train.value_counts())
+
+print("\nAfter SMOTE class distribution:")
+print(y_train_smote.value_counts())
+
+print("\nSMOTE dataset saved as:")
+print("application_minus_bureau_smote.csv")

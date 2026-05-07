@@ -1,0 +1,498 @@
+"""
+CART Binary Classification Pipeline — Full Production Model
+Goal    : Predict loan eligibility for unbanked individuals
+Dataset : Home Credit Default Risk (post-SMOTE, balanced 31650/31650)
+
+Every metric, plot, and saved artifact reflects the ACTUAL final model.
+No depth limits, no proxy models, no display-only shortcuts.
+"""
+
+import os
+import joblib
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")          # headless safe; remove if running in Jupyter
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree
+from sklearn.model_selection import (
+    train_test_split, GridSearchCV, cross_val_score,
+    StratifiedKFold, learning_curve
+)
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import (
+    classification_report, roc_auc_score, roc_curve,
+    ConfusionMatrixDisplay, accuracy_score,
+    precision_score, recall_score, f1_score,
+    precision_recall_curve, average_precision_score
+)
+from sklearn.inspection import permutation_importance
+
+import warnings
+warnings.filterwarnings("ignore")
+
+OUTPUT_DIR = "cart_outputs"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+def save(fig, name):
+    path = os.path.join(OUTPUT_DIR, name)
+    fig.savefig(path, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Saved -> {path}")
+
+
+# =============================================================
+# 1. LOAD DATA
+# =============================================================
+print("\n[1] Loading data...")
+df = pd.read_csv("application_minus_bureau_smote.csv")   # <-- update path
+
+print(f"    Shape : {df.shape}")
+print(f"    Target:\n{df['TARGET'].value_counts().to_string()}")
+
+
+# =============================================================
+# 2. FEATURE SELECTION
+# =============================================================
+print("\n[2] Selecting features...")
+
+core_features = [
+    "AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "AMT_GOODS_PRICE",
+    "CNT_CHILDREN", "CNT_FAM_MEMBERS",
+    "DAYS_BIRTH", "DAYS_EMPLOYED", "DAYS_REGISTRATION",
+    "DAYS_ID_PUBLISH", "DAYS_LAST_PHONE_CHANGE",
+]
+credit_scores = ["EXT_SOURCE_1", "EXT_SOURCE_2", "EXT_SOURCE_3"]
+categorical_features = [
+    "NAME_CONTRACT_TYPE", "CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY",
+    "NAME_TYPE_SUITE", "NAME_INCOME_TYPE", "NAME_EDUCATION_TYPE",
+    "NAME_FAMILY_STATUS", "NAME_HOUSING_TYPE", "OCCUPATION_TYPE",
+    "ORGANIZATION_TYPE", "WEEKDAY_APPR_PROCESS_START",
+]
+regional_features = [
+    "REGION_POPULATION_RELATIVE", "REGION_RATING_CLIENT",
+    "REGION_RATING_CLIENT_W_CITY",
+    "REG_REGION_NOT_LIVE_REGION", "REG_REGION_NOT_WORK_REGION",
+    "LIVE_REGION_NOT_WORK_REGION", "REG_CITY_NOT_LIVE_CITY",
+    "REG_CITY_NOT_WORK_CITY", "LIVE_CITY_NOT_WORK_CITY",
+]
+contact_flags = [
+    "FLAG_MOBIL", "FLAG_EMP_PHONE", "FLAG_WORK_PHONE",
+    "FLAG_CONT_MOBILE", "FLAG_PHONE", "FLAG_EMAIL",
+]
+social_circle = [
+    "OBS_30_CNT_SOCIAL_CIRCLE", "DEF_30_CNT_SOCIAL_CIRCLE",
+    "OBS_60_CNT_SOCIAL_CIRCLE", "DEF_60_CNT_SOCIAL_CIRCLE",
+]
+bureau_enquiries = [
+    "AMT_REQ_CREDIT_BUREAU_HOUR", "AMT_REQ_CREDIT_BUREAU_DAY",
+    "AMT_REQ_CREDIT_BUREAU_WEEK", "AMT_REQ_CREDIT_BUREAU_MON",
+    "AMT_REQ_CREDIT_BUREAU_QRT", "AMT_REQ_CREDIT_BUREAU_YEAR",
+]
+doc_flags = [
+    "FLAG_DOCUMENT_3", "FLAG_DOCUMENT_6", "FLAG_DOCUMENT_8",
+    "FLAG_DOCUMENT_16", "FLAG_DOCUMENT_18",
+]
+misc_features = ["OWN_CAR_AGE", "HOUR_APPR_PROCESS_START"]
+
+all_features = (
+    core_features + credit_scores + categorical_features +
+    regional_features + contact_flags + social_circle +
+    bureau_enquiries + doc_flags + misc_features
+)
+selected_features = [f for f in all_features if f in df.columns]
+TARGET = "TARGET"
+
+X = df[selected_features].copy()
+y = df[TARGET].copy()
+print(f"    Features selected: {len(selected_features)}")
+
+
+# =============================================================
+# 3. PREPROCESSING
+# =============================================================
+print("\n[3] Preprocessing...")
+
+label_encoders = {}
+for col in X.select_dtypes(include=["object", "category"]).columns:
+    le = LabelEncoder()
+    X[col] = le.fit_transform(X[col].astype(str))
+    label_encoders[col] = le
+
+X = X.fillna(X.median(numeric_only=True))
+print(f"    Remaining nulls: {X.isnull().sum().sum()}")
+
+
+# =============================================================
+# 4. TRAIN / TEST SPLIT  (80/20, stratified)
+# =============================================================
+print("\n[4] Splitting dataset...")
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"    Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
+
+
+# =============================================================
+# 5. BASELINE CART  (capped at depth 10 for speed — comparison only)
+# =============================================================
+print("\n[5] Fitting baseline CART...")
+cart_base = DecisionTreeClassifier(criterion="gini", max_depth=10, random_state=42)
+cart_base.fit(X_train, y_train)
+y_pred_base = cart_base.predict(X_test)
+
+print("    Baseline CART Report:")
+print(classification_report(
+    y_test, y_pred_base,
+    target_names=["Eligible (0)", "Not Eligible (1)"]
+))
+
+
+# =============================================================
+# 6. GRID SEARCH HYPERPARAMETER TUNING
+# NOTE: n_jobs=1 (single-core) avoids joblib multiprocessing
+# crashes on Python 3.13 + Windows. Grid is trimmed to 288
+# candidates (1440 fits) — still comprehensive, just faster.
+# =============================================================
+print("\n[6] Running GridSearchCV (288 candidates x 5 folds = 1440 fits)...")
+
+param_grid = {
+    "criterion":         ["gini", "entropy"],
+    "max_depth":         [5, 10, 15, None],
+    "min_samples_split": [2, 20, 50],
+    "min_samples_leaf":  [1, 10, 20],
+    "max_features":      [None, "sqrt"],
+    "ccp_alpha":         [0.0, 0.0001],
+}
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+grid_search = GridSearchCV(
+    DecisionTreeClassifier(random_state=42),
+    param_grid,
+    cv=cv,
+    scoring="roc_auc",
+    n_jobs=1,           # single-core: avoids Python 3.13/Windows joblib crash
+    verbose=2,
+    return_train_score=True,
+)
+grid_search.fit(X_train, y_train)
+
+print(f"\n    Best params : {grid_search.best_params_}")
+print(f"    Best CV AUC : {grid_search.best_score_:.4f}")
+
+
+# =============================================================
+# 7. FINAL MODEL EVALUATION ON HELD-OUT TEST SET
+#    cart_final IS the model — no re-wrapping, no proxy
+# =============================================================
+print("\n[7] Evaluating final model on held-out test set...")
+
+cart_final = grid_search.best_estimator_
+y_pred     = cart_final.predict(X_test)
+y_prob     = cart_final.predict_proba(X_test)[:, 1]
+
+acc  = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred)
+rec  = recall_score(y_test, y_pred)
+f1   = f1_score(y_test, y_pred)
+auc  = roc_auc_score(y_test, y_prob)
+ap   = average_precision_score(y_test, y_prob)
+
+print(classification_report(
+    y_test, y_pred,
+    target_names=["Eligible (0)", "Not Eligible (1)"]
+))
+print(f"    Accuracy          : {acc:.4f}")
+print(f"    Precision         : {prec:.4f}")
+print(f"    Recall            : {rec:.4f}")
+print(f"    F1-Score          : {f1:.4f}")
+print(f"    ROC-AUC           : {auc:.4f}")
+print(f"    Avg Precision     : {ap:.4f}")
+print(f"    Tree Depth        : {cart_final.get_depth()}")
+print(f"    Number of Leaves  : {cart_final.get_n_leaves()}")
+
+
+# =============================================================
+# 8. 5-FOLD CROSS-VALIDATION ON FINAL MODEL
+# =============================================================
+print("\n[8] Cross-validating final model...")
+cv_auc = cross_val_score(cart_final, X, y, cv=cv, scoring="roc_auc",  n_jobs=1)
+cv_f1  = cross_val_score(cart_final, X, y, cv=cv, scoring="f1",       n_jobs=1)
+cv_acc = cross_val_score(cart_final, X, y, cv=cv, scoring="accuracy", n_jobs=1)
+
+print(f"    CV ROC-AUC  : {cv_auc.mean():.4f} +/- {cv_auc.std():.4f}")
+print(f"    CV F1       : {cv_f1.mean():.4f}  +/- {cv_f1.std():.4f}")
+print(f"    CV Accuracy : {cv_acc.mean():.4f} +/- {cv_acc.std():.4f}")
+
+
+# =============================================================
+# 9. CONFUSION MATRIX
+# =============================================================
+print("\n[9] Plotting confusion matrix...")
+fig, ax = plt.subplots(figsize=(6, 5))
+ConfusionMatrixDisplay.from_predictions(
+    y_test, y_pred,
+    display_labels=["Eligible (0)", "Not Eligible (1)"],
+    cmap="Blues", colorbar=False, ax=ax
+)
+ax.set_title("Confusion Matrix — Final CART Model", fontsize=13, pad=12)
+save(fig, "01_confusion_matrix.png")
+
+
+# =============================================================
+# 10. ROC CURVE
+# =============================================================
+print("\n[10] Plotting ROC curve...")
+fpr, tpr, _ = roc_curve(y_test, y_prob)
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.plot(fpr, tpr, color="steelblue", lw=2,
+        label=f"Final CART (AUC = {auc:.4f})")
+ax.plot([0, 1], [0, 1], "k--", lw=1, label="Random Classifier")
+ax.fill_between(fpr, tpr, alpha=0.08, color="steelblue")
+ax.set_xlabel("False Positive Rate")
+ax.set_ylabel("True Positive Rate")
+ax.set_title("ROC Curve — Final CART Model")
+ax.legend(loc="lower right")
+save(fig, "02_roc_curve.png")
+
+
+# =============================================================
+# 11. PRECISION-RECALL CURVE
+# =============================================================
+print("\n[11] Plotting Precision-Recall curve...")
+precision_vals, recall_vals, _ = precision_recall_curve(y_test, y_prob)
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.plot(recall_vals, precision_vals, color="darkorange", lw=2,
+        label=f"Final CART (AP = {ap:.4f})")
+ax.axhline(y=y_test.mean(), color="gray", linestyle="--", lw=1,
+           label="Baseline (no skill)")
+ax.set_xlabel("Recall")
+ax.set_ylabel("Precision")
+ax.set_title("Precision-Recall Curve — Final CART Model")
+ax.legend()
+save(fig, "03_precision_recall_curve.png")
+
+
+# =============================================================
+# 12. GINI FEATURE IMPORTANCE
+# =============================================================
+print("\n[12] Plotting Gini feature importance...")
+importances = cart_final.feature_importances_
+feat_df = (
+    pd.DataFrame({"Feature": selected_features, "Importance": importances})
+    .query("Importance > 0")
+    .sort_values("Importance", ascending=False)
+    .reset_index(drop=True)
+)
+
+top_n = min(25, len(feat_df))
+fig, ax = plt.subplots(figsize=(10, 8))
+sns.barplot(
+    data=feat_df.head(top_n),
+    x="Importance", y="Feature",
+    palette="Blues_r", ax=ax
+)
+ax.set_title(f"Top {top_n} Features — Gini Importance (Final CART)", fontsize=13)
+ax.set_xlabel("Mean Decrease in Gini Impurity")
+save(fig, "04_feature_importance_gini.png")
+
+feat_df.to_csv(os.path.join(OUTPUT_DIR, "feature_importance_gini.csv"), index=False)
+print(f"\n    Top 10 (Gini):\n{feat_df.head(10)[['Feature','Importance']].to_string(index=False)}")
+
+
+# =============================================================
+# 13. PERMUTATION IMPORTANCE  (test set, n_repeats=15)
+# =============================================================
+print("\n[13] Computing permutation importance (n_repeats=15)...")
+perm = permutation_importance(
+    cart_final, X_test, y_test,
+    n_repeats=15, random_state=42,
+    scoring="roc_auc", n_jobs=1
+)
+perm_df = (
+    pd.DataFrame({
+        "Feature":    selected_features,
+        "Importance": perm.importances_mean,
+        "Std":        perm.importances_std,
+    })
+    .sort_values("Importance", ascending=False)
+    .reset_index(drop=True)
+)
+
+top_perm = perm_df.head(top_n)
+fig, ax = plt.subplots(figsize=(10, 8))
+ax.barh(
+    top_perm["Feature"][::-1],
+    top_perm["Importance"][::-1],
+    xerr=top_perm["Std"][::-1],
+    color="steelblue", alpha=0.85, capsize=3
+)
+ax.set_title(f"Top {top_n} Features — Permutation Importance (Final CART)", fontsize=13)
+ax.set_xlabel("Mean ROC-AUC Decrease")
+save(fig, "05_feature_importance_permutation.png")
+
+perm_df.to_csv(os.path.join(OUTPUT_DIR, "feature_importance_permutation.csv"), index=False)
+print(f"\n    Top 10 (Permutation):\n{perm_df.head(10)[['Feature','Importance']].to_string(index=False)}")
+
+
+# =============================================================
+# 14. LEARNING CURVE
+# =============================================================
+print("\n[14] Plotting learning curve...")
+train_sizes, train_scores, val_scores = learning_curve(
+    cart_final, X_train, y_train,
+    train_sizes=np.linspace(0.1, 1.0, 10),
+    cv=cv, scoring="roc_auc",
+    n_jobs=1, random_state=42
+)
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(train_sizes, train_scores.mean(axis=1), "o-",
+        color="steelblue", label="Train ROC-AUC")
+ax.fill_between(
+    train_sizes,
+    train_scores.mean(axis=1) - train_scores.std(axis=1),
+    train_scores.mean(axis=1) + train_scores.std(axis=1),
+    alpha=0.12, color="steelblue"
+)
+ax.plot(train_sizes, val_scores.mean(axis=1), "o-",
+        color="darkorange", label="Validation ROC-AUC")
+ax.fill_between(
+    train_sizes,
+    val_scores.mean(axis=1) - val_scores.std(axis=1),
+    val_scores.mean(axis=1) + val_scores.std(axis=1),
+    alpha=0.12, color="darkorange"
+)
+ax.set_xlabel("Training Samples")
+ax.set_ylabel("ROC-AUC")
+ax.set_title("Learning Curve — Final CART Model")
+ax.legend()
+save(fig, "06_learning_curve.png")
+
+
+# =============================================================
+# 15. FULL TREE VISUALIZATION
+#     Uses cart_final with NO depth cap anywhere.
+#     Figure auto-scales to the actual tree size.
+# =============================================================
+print("\n[15] Rendering full decision tree (may take a moment for deep trees)...")
+
+actual_depth  = cart_final.get_depth()
+actual_leaves = cart_final.get_n_leaves()
+print(f"    Tree depth  : {actual_depth}")
+print(f"    Tree leaves : {actual_leaves}")
+
+fig_w = max(30, actual_leaves * 0.4)
+fig_h = max(12, actual_depth * 1.6)
+fig, ax = plt.subplots(figsize=(fig_w, fig_h))
+
+plot_tree(
+    cart_final,                                         # THE final model
+    feature_names=selected_features,                   # all real feature names
+    class_names=["Eligible", "Not Eligible"],
+    filled=True,
+    rounded=True,
+    fontsize=max(4, min(9, 200 // max(actual_leaves, 1))),
+    impurity=True,
+    proportion=False,
+    precision=3,
+    ax=ax,
+)
+ax.set_title(
+    f"Final CART Decision Tree  |  Depth: {actual_depth}  |  Leaves: {actual_leaves}",
+    fontsize=14, pad=14
+)
+save(fig, "07_decision_tree_FULL.png")
+
+
+# =============================================================
+# 16. EXPORT FULL DECISION RULES AS TEXT
+# =============================================================
+print("\n[16] Exporting full decision rules...")
+full_rules = export_text(
+    cart_final,
+    feature_names=selected_features,
+    spacing=3,
+    decimals=4,
+    show_weights=True,
+)
+rules_path = os.path.join(OUTPUT_DIR, "decision_rules_FULL.txt")
+with open(rules_path, "w", encoding="utf-8") as f:
+    f.write(full_rules)
+print(f"    Saved -> {rules_path}  ({os.path.getsize(rules_path)/1024:.1f} KB)")
+
+# Print top 4 levels to console for quick review
+top_rules = export_text(
+    cart_final, feature_names=selected_features,
+    max_depth=4, spacing=3, decimals=4, show_weights=True
+)
+print("\n    --- Top 4 decision levels (console preview) ---")
+print(top_rules)
+
+
+# =============================================================
+# 17. SAVE FINAL MODEL WITH JOBLIB
+# =============================================================
+print("\n[17] Saving final model...")
+model_path = os.path.join(OUTPUT_DIR, "cart_final_model.pkl")
+joblib.dump({
+    "model":          cart_final,
+    "features":       selected_features,
+    "label_encoders": label_encoders,
+    "best_params":    grid_search.best_params_,
+    "cv_auc_mean":    cv_auc.mean(),
+    "test_auc":       auc,
+}, model_path)
+print(f"    Saved -> {model_path}")
+
+# Verify round-trip integrity
+loaded  = joblib.load(model_path)
+y_check = loaded["model"].predict(X_test)
+assert np.array_equal(y_check, y_pred), "Round-trip model check FAILED"
+print("    Round-trip verification: PASSED")
+
+
+# =============================================================
+# 18. SAVE TEST-SET PREDICTIONS
+# =============================================================
+print("\n[18] Saving test-set predictions...")
+pred_df = X_test.copy()
+pred_df["y_true"]         = y_test.values
+pred_df["y_pred"]         = y_pred
+pred_df["y_prob_default"] = y_prob
+pred_path = os.path.join(OUTPUT_DIR, "test_predictions.csv")
+pred_df.to_csv(pred_path, index=False)
+print(f"    Saved -> {pred_path}")
+
+
+# =============================================================
+# 19. FINAL SUMMARY
+# =============================================================
+print("\n" + "=" * 62)
+print("         FINAL CART MODEL — COMPLETE SUMMARY")
+print("=" * 62)
+print(f"  Features used          : {len(selected_features)}")
+print(f"  Best hyperparameters   : {grid_search.best_params_}")
+print(f"  Tree depth             : {cart_final.get_depth()}")
+print(f"  Number of leaves       : {cart_final.get_n_leaves()}")
+print(f"  Test Accuracy          : {acc:.4f}")
+print(f"  Test Precision         : {prec:.4f}")
+print(f"  Test Recall            : {rec:.4f}")
+print(f"  Test F1-Score          : {f1:.4f}")
+print(f"  Test ROC-AUC           : {auc:.4f}")
+print(f"  Test Avg Precision     : {ap:.4f}")
+print(f"  CV ROC-AUC  (5-fold)   : {cv_auc.mean():.4f} +/- {cv_auc.std():.4f}")
+print(f"  CV F1       (5-fold)   : {cv_f1.mean():.4f}  +/- {cv_f1.std():.4f}")
+print(f"  CV Accuracy (5-fold)   : {cv_acc.mean():.4f} +/- {cv_acc.std():.4f}")
+print("=" * 62)
+print(f"\n  All outputs saved to: ./{OUTPUT_DIR}/")
+print("  Files generated:")
+for fname in sorted(os.listdir(OUTPUT_DIR)):
+    fpath = os.path.join(OUTPUT_DIR, fname)
+    print(f"    {fname:50s} {os.path.getsize(fpath)/1024:8.1f} KB")
+print("=" * 62)

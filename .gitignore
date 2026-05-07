@@ -1,0 +1,8 @@
+# Too large for GitHub (>100MB)
+application_train.csv
+bureau.csv
+
+# These are fine size-wise but still sensitive/large
+application_minus_bureau.csv
+
+.venv/

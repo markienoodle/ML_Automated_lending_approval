@@ -1,0 +1,33 @@
+import pandas as pd
+
+# ================================
+# 1. LOAD DATA
+# ================================
+app = pd.read_csv('application_train.csv')
+bureau = pd.read_csv('bureau.csv')
+
+# ================================
+# 2. GET UNIQUE IDS FROM BUREAU
+# ================================
+# These are customers that exist in bureau
+bureau_ids = bureau['SK_ID_CURR'].unique()
+
+# ================================
+# 3. REMOVE MATCHING IDS FROM APPLICATION
+# ================================
+# Keep only rows in application_train NOT in bureau
+filtered_app = app[~app['SK_ID_CURR'].isin(bureau_ids)]
+
+# ================================
+# 4. RESET INDEX (clean output)
+# ================================
+filtered_app = filtered_app.reset_index(drop=True)
+
+# ================================
+# 5. SAVE RESULT
+# ================================
+filtered_app.to_csv('application_minus_bureau.csv', index=False)
+
+print("Done! Rows in bureau removed from application_train.")
+print("Original rows:", len(app))
+print("Filtered rows:", len(filtered_app))
