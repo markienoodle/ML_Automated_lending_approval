@@ -1,6 +1,6 @@
 ﻿# ML_Automated_lending_approval
 
-**Introduction**
+#Introduction
 Glass-Box Lending: Leveraging the Explainability of CART for Automated Loan Approval Among Unbanked Populations
 
 A Machine Learning Project Presented to the Department of Computer Science College of Information and Computing Sciences University of Santo Tomas
