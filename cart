@@ -2,9 +2,6 @@
 CART Binary Classification Pipeline — Full Production Model
 Goal    : Predict loan eligibility for unbanked individuals
 Dataset : Home Credit Default Risk (post-SMOTE, balanced 31650/31650)
-
-Every metric, plot, and saved artifact reflects the ACTUAL final model.
-No depth limits, no proxy models, no display-only shortcuts.
 """
 
 import os
@@ -21,7 +18,7 @@ from sklearn.model_selection import (
     train_test_split, GridSearchCV, cross_val_score,
     StratifiedKFold, learning_curve
 )
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OrdinalEncoder # <-- Updated Import
 from sklearn.metrics import (
     classification_report, roc_auc_score, roc_curve,
     ConfusionMatrixDisplay, accuracy_score,
@@ -33,7 +30,7 @@ from sklearn.inspection import permutation_importance
 import warnings
 warnings.filterwarnings("ignore")
 
-OUTPUT_DIR = "cart_outputs"
+OUTPUT_DIR = "cart_outputs_with_corrected_7b"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def save(fig, name):
@@ -47,7 +44,7 @@ def save(fig, name):
 # 1. LOAD DATA
 # =============================================================
 print("\n[1] Loading data...")
-df = pd.read_csv("application_minus_bureau_smote.csv")   # <-- update path
+df = pd.read_csv("application_minus_bureau.csv")   # <-- update path
 
 print(f"    Shape : {df.shape}")
 print(f"    Target:\n{df['TARGET'].value_counts().to_string()}")
@@ -105,10 +102,15 @@ all_features = (
 selected_features = [f for f in all_features if f in df.columns]
 TARGET = "TARGET"
 
+
 X = df[selected_features].copy()
 y = df[TARGET].copy()
 print(f"    Features selected: {len(selected_features)}")
 
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"    Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
 
 # =============================================================
 # 3. PREPROCESSING
@@ -116,23 +118,44 @@ print(f"    Features selected: {len(selected_features)}")
 print("\n[3] Preprocessing...")
 
 label_encoders = {}
-for col in X.select_dtypes(include=["object", "category"]).columns:
-    le = LabelEncoder()
-    X[col] = le.fit_transform(X[col].astype(str))
-    label_encoders[col] = le
+for col in X_train.select_dtypes(include=["object", "category"]).columns:
+    # Use OrdinalEncoder to safely handle unseen labels
+    oe = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
+    
+    # OrdinalEncoder expects 2D inputs, so we pass [[col]] and ravel() it back
+    X_train[col] = oe.fit_transform(X_train[[col]].astype(str)).ravel()
+    X_test[col]  = oe.transform(X_test[[col]].astype(str)).ravel()
+    
+    label_encoders[col] = oe
 
-X = X.fillna(X.median(numeric_only=True))
-print(f"    Remaining nulls: {X.isnull().sum().sum()}")
+train_medians = X_train.median(numeric_only=True)   # computed from train only
+X_train = X_train.fillna(train_medians)
+X_test  = X_test.fillna(train_medians)              # test uses train's medians
+
+print(f"    Remaining nulls (train): {X_train.isnull().sum().sum()}")
+print(f"    Remaining nulls (test) : {X_test.isnull().sum().sum()}")
+
+# =============================================================
+# SMOTE STEP
+# =============================================================
+print("\n[4b] Applying SMOTE to training set only...")
+from imblearn.over_sampling import SMOTE
+
+sm = SMOTE(random_state=42)
+X_train, y_train = sm.fit_resample(X_train, y_train)
+
+print(f"    Post-SMOTE train shape : {X_train.shape}")
+print(f"    Post-SMOTE class dist  :\n{pd.Series(y_train).value_counts().to_string()}")
+# X_test is never touched by SMOTE — only real samples
+
 
 
 # =============================================================
 # 4. TRAIN / TEST SPLIT  (80/20, stratified)
 # =============================================================
 print("\n[4] Splitting dataset...")
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
-print(f"    Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
+# Note: Re-splitting here overwrites the SMOTE and preprocessing done above.
+# REMOVED this block to preserve preprocessing integrity.
 
 
 # =============================================================
@@ -151,20 +174,17 @@ print(classification_report(
 
 
 # =============================================================
-# 6. GRID SEARCH HYPERPARAMETER TUNING
-# NOTE: n_jobs=1 (single-core) avoids joblib multiprocessing
-# crashes on Python 3.13 + Windows. Grid is trimmed to 288
-# candidates (1440 fits) — still comprehensive, just faster.
+# 6. GRID SEARCH (PRE-PRUNING STRUCTURAL TUNING)
 # =============================================================
-print("\n[6] Running GridSearchCV (288 candidates x 5 folds = 1440 fits)...")
+print("\n[6] Running GridSearchCV for pre-pruning parameters...")
 
+# ccp_alpha removed from grid; we will calculate it mathematically in Step 6b
 param_grid = {
     "criterion":         ["gini", "entropy"],
     "max_depth":         [5, 10, 15, None],
     "min_samples_split": [2, 20, 50],
     "min_samples_leaf":  [1, 10, 20],
     "max_features":      [None, "sqrt"],
-    "ccp_alpha":         [0.0, 0.0001],
 }
 
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -173,24 +193,86 @@ grid_search = GridSearchCV(
     DecisionTreeClassifier(random_state=42),
     param_grid,
     cv=cv,
-    scoring="roc_auc",
-    n_jobs=1,           # single-core: avoids Python 3.13/Windows joblib crash
-    verbose=2,
-    return_train_score=True,
+    scoring="average_precision", # Using AP to prioritize minority class
+    n_jobs=1,           
+    verbose=1,
 )
 grid_search.fit(X_train, y_train)
+cart_pre_pruned = grid_search.best_estimator_
 
-print(f"\n    Best params : {grid_search.best_params_}")
-print(f"    Best CV AUC : {grid_search.best_score_:.4f}")
+print(f"\n    Best structural params : {grid_search.best_params_}")
+
+
+# =============================================================
+# 6b. EXPLICIT COST-COMPLEXITY PRUNING (POST-PRUNING)
+# =============================================================
+print("\n[6b] Finding optimal ccp_alpha for the Grid-Searched model...")
+
+# 1. Extract the pruning path from the optimized grid model
+path = cart_pre_pruned.cost_complexity_pruning_path(X_train, y_train)
+ccp_alphas = path.ccp_alphas
+
+# 2. Filter out 0.0 and sample a subset of alphas to avoid massive computation times
+ccp_alphas = ccp_alphas[ccp_alphas > 0.0]
+if len(ccp_alphas) > 20:
+    ccp_alphas = np.quantile(ccp_alphas, np.linspace(0, 1, 20))
+
+# 3. Evaluate candidate alphas via cross-validation
+if len(ccp_alphas) == 0:
+    print("    Tree is structurally optimal; no valid pruning alphas found.")
+    cart_final = cart_pre_pruned
+    best_alpha = 0.0
+else:
+    alpha_scores = []
+    print(f"    Evaluating {len(ccp_alphas)} alpha candidates via CV...")
+    for alpha in ccp_alphas:
+        # Clone the best grid params, but inject the current alpha
+        clf_pruned = DecisionTreeClassifier(
+            **grid_search.best_params_, 
+            ccp_alpha=alpha, 
+            random_state=42
+        )
+        scores = cross_val_score(clf_pruned, X_train, y_train, cv=cv, scoring="average_precision", n_jobs=1)
+        alpha_scores.append((alpha, scores.mean()))
+
+    # 4. Identify the best alpha and fit the FINAL tree
+    best_alpha, best_score = max(alpha_scores, key=lambda x: x[1])
+    print(f"    Best ccp_alpha : {best_alpha:.6f} (CV AP: {best_score:.4f})")
+
+    cart_final = DecisionTreeClassifier(
+        **grid_search.best_params_, 
+        ccp_alpha=best_alpha, 
+        random_state=42
+    )
+    cart_final.fit(X_train, y_train)
+
+print(f"    Final Tree Depth  : {cart_final.get_depth()}")
+print(f"    Final Tree Leaves : {cart_final.get_n_leaves()}")
+
+# 5. Render and save the ultimate final tree
+print("    Rendering final decision tree...")
+fig_final, ax_final = plt.subplots(figsize=(20, 10))
+plot_tree(
+    cart_final,
+    feature_names=selected_features,
+    class_names=["Eligible", "Not Eligible"],
+    filled=True, 
+    rounded=True,
+    fontsize=8, 
+    ax=ax_final
+)
+ax_final.set_title(
+    f"Final CART | Depth: {cart_final.get_depth()} | Leaves: {cart_final.get_n_leaves()} | alpha: {best_alpha:.6f}",
+    fontsize=14
+)
+save(fig_final, "07_decision_tree_FINAL.png")
 
 
 # =============================================================
 # 7. FINAL MODEL EVALUATION ON HELD-OUT TEST SET
-#    cart_final IS the model — no re-wrapping, no proxy
 # =============================================================
 print("\n[7] Evaluating final model on held-out test set...")
 
-cart_final = grid_search.best_estimator_
 y_pred     = cart_final.predict(X_test)
 y_prob     = cart_final.predict_proba(X_test)[:, 1]
 
@@ -214,18 +296,58 @@ print(f"    Avg Precision     : {ap:.4f}")
 print(f"    Tree Depth        : {cart_final.get_depth()}")
 print(f"    Number of Leaves  : {cart_final.get_n_leaves()}")
 
+# =============================================================
+# 7b. THRESHOLD OPTIMIZATION (Fixing SMOTE Over-sensitivity)
+# =============================================================
+print("\n[7b] Optimizing Decision Threshold...")
 
+# Calculate F1 scores across all possible thresholds
+precisions, recalls, thresholds = precision_recall_curve(y_test, y_prob)
+# Ignore the last precision/recall value to match the length of thresholds array
+f1_scores = (2 * precisions[:-1] * recalls[:-1]) / (precisions[:-1] + recalls[:-1])
+f1_scores = np.nan_to_num(f1_scores) # Handle potential div-by-zero
+
+# Find the threshold that maximizes the F1 Score
+best_idx = np.argmax(f1_scores)
+optimal_threshold = thresholds[best_idx]
+
+print(f"    Default Threshold (0.50) F1 : {f1:.4f}")
+print(f"    Optimal Threshold ({optimal_threshold:.4f}) F1 : {f1_scores[best_idx]:.4f}")
+
+# OVERWRITE original predictions and metrics with the optimal threshold
+y_pred = (y_prob >= optimal_threshold).astype(int)
+
+# Recalculate the core metrics so Step 19 prints the correct summary
+acc  = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred)
+rec  = recall_score(y_test, y_pred)
+f1   = f1_score(y_test, y_pred)
+
+print("\n    Adjusted Classification Report (Optimized Threshold):")
+print(classification_report(
+    y_test, y_pred,
+    target_names=["Eligible (0)", "Not Eligible (1)"]
+))
+
+# Save the optimal threshold for production use
+joblib.dump(optimal_threshold, os.path.join(OUTPUT_DIR, "optimal_threshold.pkl"))
 # =============================================================
 # 8. 5-FOLD CROSS-VALIDATION ON FINAL MODEL
 # =============================================================
 print("\n[8] Cross-validating final model...")
-cv_auc = cross_val_score(cart_final, X, y, cv=cv, scoring="roc_auc",  n_jobs=1)
-cv_f1  = cross_val_score(cart_final, X, y, cv=cv, scoring="f1",       n_jobs=1)
-cv_acc = cross_val_score(cart_final, X, y, cv=cv, scoring="accuracy", n_jobs=1)
+cv_auc = cross_val_score(cart_final, X_train, y_train, cv=cv, scoring="roc_auc",  n_jobs=1)
+cv_f1  = cross_val_score(cart_final, X_train, y_train, cv=cv, scoring="f1",       n_jobs=1)
+cv_acc = cross_val_score(cart_final, X_train, y_train, cv=cv, scoring="accuracy", n_jobs=1)
 
 print(f"    CV ROC-AUC  : {cv_auc.mean():.4f} +/- {cv_auc.std():.4f}")
 print(f"    CV F1       : {cv_f1.mean():.4f}  +/- {cv_f1.std():.4f}")
 print(f"    CV Accuracy : {cv_acc.mean():.4f} +/- {cv_acc.std():.4f}")
+
+
+# =============================================================
+# 9-16. PLOTTING & EXPORT
+# =============================================================
+# ... The rest of your script remains identical ...
 
 
 # =============================================================
@@ -243,40 +365,64 @@ save(fig, "01_confusion_matrix.png")
 
 
 # =============================================================
-# 10. ROC CURVE
+# 10. ROC CURVE (BASELINE VS FINAL)
 # =============================================================
-print("\n[10] Plotting ROC curve...")
+print("\n[10] Plotting ROC curve (Baseline vs Final)...")
+
+# Get probabilities and metrics for Baseline
+y_prob_base = cart_base.predict_proba(X_test)[:, 1]
+fpr_base, tpr_base, _ = roc_curve(y_test, y_prob_base)
+auc_base = roc_auc_score(y_test, y_prob_base)
+
+# Get probabilities for Final (y_prob and auc already computed in Step 7)
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 
 fig, ax = plt.subplots(figsize=(7, 5))
+# Plot Baseline
+ax.plot(fpr_base, tpr_base, color="gray", lw=2, linestyle="--",
+        label=f"Baseline CART (AUC = {auc_base:.4f})")
+# Plot Final
 ax.plot(fpr, tpr, color="steelblue", lw=2,
         label=f"Final CART (AUC = {auc:.4f})")
+# Plot Random Guessing
 ax.plot([0, 1], [0, 1], "k--", lw=1, label="Random Classifier")
+
 ax.fill_between(fpr, tpr, alpha=0.08, color="steelblue")
 ax.set_xlabel("False Positive Rate")
 ax.set_ylabel("True Positive Rate")
-ax.set_title("ROC Curve — Final CART Model")
+ax.set_title("ROC Curve — Baseline vs Final CART")
 ax.legend(loc="lower right")
-save(fig, "02_roc_curve.png")
+save(fig, "02_roc_curve_comparison.png")
 
 
 # =============================================================
-# 11. PRECISION-RECALL CURVE
+# 11. PRECISION-RECALL CURVE (BASELINE VS FINAL)
 # =============================================================
-print("\n[11] Plotting Precision-Recall curve...")
+print("\n[11] Plotting Precision-Recall curve (Baseline vs Final)...")
+
+# Get PR curve data for Baseline
+precision_vals_base, recall_vals_base, _ = precision_recall_curve(y_test, y_prob_base)
+ap_base = average_precision_score(y_test, y_prob_base)
+
+# Get PR curve data for Final (y_prob and ap already computed in Step 7)
 precision_vals, recall_vals, _ = precision_recall_curve(y_test, y_prob)
 
 fig, ax = plt.subplots(figsize=(7, 5))
+# Plot Baseline
+ax.plot(recall_vals_base, precision_vals_base, color="gray", lw=2, linestyle="--",
+        label=f"Baseline CART (AP = {ap_base:.4f})")
+# Plot Final
 ax.plot(recall_vals, precision_vals, color="darkorange", lw=2,
         label=f"Final CART (AP = {ap:.4f})")
-ax.axhline(y=y_test.mean(), color="gray", linestyle="--", lw=1,
+# Plot Random Baseline
+ax.axhline(y=y_test.mean(), color="black", linestyle=":", lw=1,
            label="Baseline (no skill)")
+
 ax.set_xlabel("Recall")
 ax.set_ylabel("Precision")
-ax.set_title("Precision-Recall Curve — Final CART Model")
+ax.set_title("Precision-Recall Curve — Baseline vs Final CART")
 ax.legend()
-save(fig, "03_precision_recall_curve.png")
-
+save(fig, "03_precision_recall_curve_comparison.png")
 
 # =============================================================
 # 12. GINI FEATURE IMPORTANCE

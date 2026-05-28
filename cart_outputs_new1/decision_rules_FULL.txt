@@ -1,0 +1,952 @@
+|--- EXT_SOURCE_2 <= 0.5675
+|   |--- FLAG_PHONE <= 0.5000
+|   |   |--- FLAG_OWN_CAR <= 0.5000
+|   |   |   |--- OWN_CAR_AGE <= 10.0002
+|   |   |   |   |--- OWN_CAR_AGE <= 9.9997
+|   |   |   |   |   |--- weights: [0.0000, 2390.0000] class: 1
+|   |   |   |   |--- OWN_CAR_AGE >  9.9997
+|   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0001
+|   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0019
+|   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE <= 4.5000
+|   |   |   |   |   |   |   |   |   |--- REGION_RATING_CLIENT <= 2.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 805235.9375
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 10
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT >  805235.9375
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [33.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- REGION_RATING_CLIENT >  2.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -170.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -170.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [30.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE >  4.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -583.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [55.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -583.0000
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.4677
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [28.0000, 13.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.4677
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [16.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0019
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.9979
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 175.0000] class: 1
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.9979
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.0020
+|   |   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE <= 0.0404
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE >  0.0404
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [20.0000, 20.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.0020
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.9996
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 79.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.9996
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 10
+|   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4632
+|   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE <= 5.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 294815.2500
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT >  294815.2500
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE >  5.5000
+|   |   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE <= 41.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE >  41.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4632
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_6 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 12
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_6 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -702.8910
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -702.8910
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -10035.5000
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 7.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [10.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  7.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [92.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -10035.5000
+|   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE <= 11.5000
+|   |   |   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE <= 1.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [42.0000, 7.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE >  1.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [7.0000, 11.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE >  11.5000
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0184
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [18.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0184
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 0.0000] class: 0
+|   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0001
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9997
+|   |   |   |   |   |   |   |--- weights: [0.0000, 3305.0000] class: 1
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9997
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.0001
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0008
+|   |   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE <= 11.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 16
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE >  11.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 16
+|   |   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -10884.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -10884.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0008
+|   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.9992
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 585.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.9992
+|   |   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 1.0031
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 9
+|   |   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  1.0031
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 17
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.0001
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.9998
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 2295.0000] class: 1
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.9998
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 3.0010
+|   |   |   |   |   |   |   |   |   |   |--- REG_CITY_NOT_WORK_CITY <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 14
+|   |   |   |   |   |   |   |   |   |   |--- REG_CITY_NOT_WORK_CITY >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 7
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  3.0010
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 3.9988
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 730.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  3.9988
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 11
+|   |   |   |--- OWN_CAR_AGE >  10.0002
+|   |   |   |   |--- weights: [0.0000, 3805.0000] class: 1
+|   |   |--- FLAG_OWN_CAR >  0.5000
+|   |   |   |--- EXT_SOURCE_1 <= 0.4641
+|   |   |   |   |--- REG_CITY_NOT_WORK_CITY <= 0.5000
+|   |   |   |   |   |--- REGION_RATING_CLIENT <= 2.5000
+|   |   |   |   |   |   |--- NAME_FAMILY_STATUS <= 2.5000
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9929
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0027
+|   |   |   |   |   |   |   |   |   |--- weights: [5.0000, 14.0000] class: 1
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0027
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 134.0000] class: 1
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9929
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.0042
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -155.0415
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0299
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0299
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [22.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -155.0415
+|   |   |   |   |   |   |   |   |   |   |--- weights: [28.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.0042
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.9987
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 184.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.9987
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 3.0333
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  3.0333
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |--- NAME_FAMILY_STATUS >  2.5000
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 303750.0000
+|   |   |   |   |   |   |   |   |--- weights: [41.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  303750.0000
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.5183
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 14.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [13.0000, 34.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  14.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [8.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.5183
+|   |   |   |   |   |   |   |   |   |--- weights: [10.0000, 1.0000] class: 0
+|   |   |   |   |   |--- REGION_RATING_CLIENT >  2.5000
+|   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 6.5000
+|   |   |   |   |   |   |   |--- weights: [28.0000, 2.0000] class: 0
+|   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  6.5000
+|   |   |   |   |   |   |   |--- REGION_RATING_CLIENT_W_CITY <= 2.5000
+|   |   |   |   |   |   |   |   |--- weights: [12.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- REGION_RATING_CLIENT_W_CITY >  2.5000
+|   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 256500.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [16.0000, 27.0000] class: 1
+|   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  256500.0000
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.2918
+|   |   |   |   |   |   |   |   |   |   |--- weights: [31.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.2918
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.3598
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [2.0000, 14.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.3598
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [26.0000, 12.0000] class: 0
+|   |   |   |   |--- REG_CITY_NOT_WORK_CITY >  0.5000
+|   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.0062
+|   |   |   |   |   |   |--- NAME_EDUCATION_TYPE <= 1.5000
+|   |   |   |   |   |   |   |--- weights: [43.0000, 1.0000] class: 0
+|   |   |   |   |   |   |--- NAME_EDUCATION_TYPE >  1.5000
+|   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0770
+|   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 24774.7500
+|   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  24774.7500
+|   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 8.0000] class: 0
+|   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0770
+|   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -484.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [25.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -484.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 19.0000] class: 1
+|   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 >  0.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [15.0000, 0.0000] class: 0
+|   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.0062
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.9964
+|   |   |   |   |   |   |   |--- weights: [0.0000, 18.0000] class: 1
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.9964
+|   |   |   |   |   |   |   |--- AMT_CREDIT <= 957690.0000
+|   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 483907.8594
+|   |   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE <= 2.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [39.0000, 10.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE >  2.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [8.0000, 14.0000] class: 1
+|   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  483907.8594
+|   |   |   |   |   |   |   |   |   |--- weights: [22.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_CREDIT >  957690.0000
+|   |   |   |   |   |   |   |   |--- weights: [5.0000, 17.0000] class: 1
+|   |   |   |--- EXT_SOURCE_1 >  0.4641
+|   |   |   |   |--- OCCUPATION_TYPE <= 11.5000
+|   |   |   |   |   |--- LIVE_CITY_NOT_WORK_CITY <= 0.5000
+|   |   |   |   |   |   |--- NAME_FAMILY_STATUS <= 0.5000
+|   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -6727.3916
+|   |   |   |   |   |   |   |   |   |--- weights: [9.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -6727.3916
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -1445.4239
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 51.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -1445.4239
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [2.0000, 8.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [6.0000, 15.0000] class: 1
+|   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 878020.9375
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -3261.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [10.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -3261.0000
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE <= 8.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE >  8.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [2.0000, 20.0000] class: 1
+|   |   |   |   |   |   |   |   |--- AMT_CREDIT >  878020.9375
+|   |   |   |   |   |   |   |   |   |--- weights: [10.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- NAME_FAMILY_STATUS >  0.5000
+|   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 3.9526
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 2.0127
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [22.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE >  2.0127
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 8
+|   |   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  3.9526
+|   |   |   |   |   |   |   |   |   |   |--- weights: [35.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 >  0.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -7866.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [5.0000, 9.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -7866.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -1692.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [29.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -1692.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [20.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE <= 0.0130
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.6909
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 1.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  1.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 9
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.6909
+|   |   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE >  0.0130
+|   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE <= 0.9822
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 48.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE >  0.9822
+|   |   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE <= 1.0020
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE >  1.0020
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [11.0000, 16.0000] class: 1
+|   |   |   |   |   |--- LIVE_CITY_NOT_WORK_CITY >  0.5000
+|   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 948226.2500
+|   |   |   |   |   |   |   |--- LIVE_REGION_NOT_WORK_REGION <= 0.5000
+|   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE <= 1.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE >  1.5000
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 13.7245
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE >  13.7245
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 12.0000] class: 0
+|   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 197097.1484
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4712
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4712
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [21.0000, 12.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  197097.1484
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 19.1128
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- OWN_CAR_AGE >  19.1128
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [1.0000, 10.0000] class: 1
+|   |   |   |   |   |   |   |--- LIVE_REGION_NOT_WORK_REGION >  0.5000
+|   |   |   |   |   |   |   |   |--- weights: [51.0000, 2.0000] class: 0
+|   |   |   |   |   |   |--- AMT_GOODS_PRICE >  948226.2500
+|   |   |   |   |   |   |   |--- weights: [44.0000, 0.0000] class: 0
+|   |   |   |   |--- OCCUPATION_TYPE >  11.5000
+|   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0017
+|   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.6378
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 11.5000
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.2461
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.7813
+|   |   |   |   |   |   |   |   |   |   |--- weights: [6.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.7813
+|   |   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.2461
+|   |   |   |   |   |   |   |   |   |--- weights: [161.0000, 7.0000] class: 0
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE >  11.5000
+|   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 25071.8799
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 20749.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [86.0000, 12.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  20749.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [35.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  25071.8799
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -1192.0000
+|   |   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE <= 39.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE >  39.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 8.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -1192.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [30.0000, 1.0000] class: 0
+|   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.6378
+|   |   |   |   |   |   |   |--- weights: [44.0000, 0.0000] class: 0
+|   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0017
+|   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.9885
+|   |   |   |   |   |   |   |--- weights: [0.0000, 48.0000] class: 1
+|   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.9885
+|   |   |   |   |   |   |   |--- AMT_CREDIT <= 236529.0000
+|   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE <= 24.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [20.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |--- ORGANIZATION_TYPE >  24.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [58.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_CREDIT >  236529.0000
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.0186
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.2014
+|   |   |   |   |   |   |   |   |   |   |--- weights: [14.0000, 8.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.2014
+|   |   |   |   |   |   |   |   |   |   |--- weights: [88.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.0186
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.9998
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 40.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.9998
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_3 <= 0.7824
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_3 >  0.7824
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [2.0000, 9.0000] class: 1
+|   |--- FLAG_PHONE >  0.5000
+|   |   |--- EXT_SOURCE_1 <= 0.4622
+|   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0050
+|   |   |   |   |--- DAYS_REGISTRATION <= -6855.0022
+|   |   |   |   |   |--- DAYS_BIRTH <= -15040.0000
+|   |   |   |   |   |   |--- weights: [29.0000, 0.0000] class: 0
+|   |   |   |   |   |--- DAYS_BIRTH >  -15040.0000
+|   |   |   |   |   |   |--- DAYS_BIRTH <= -13486.0000
+|   |   |   |   |   |   |   |--- weights: [9.0000, 8.0000] class: 0
+|   |   |   |   |   |   |--- DAYS_BIRTH >  -13486.0000
+|   |   |   |   |   |   |   |--- weights: [35.0000, 2.0000] class: 0
+|   |   |   |   |--- DAYS_REGISTRATION >  -6855.0022
+|   |   |   |   |   |--- NAME_INCOME_TYPE <= 1.5000
+|   |   |   |   |   |   |--- DAYS_ID_PUBLISH <= -2870.5000
+|   |   |   |   |   |   |   |--- weights: [28.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- DAYS_ID_PUBLISH >  -2870.5000
+|   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |--- weights: [20.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |--- weights: [22.0000, 12.0000] class: 0
+|   |   |   |   |   |--- NAME_INCOME_TYPE >  1.5000
+|   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 7.5000
+|   |   |   |   |   |   |   |--- weights: [32.0000, 2.0000] class: 0
+|   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  7.5000
+|   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.4922
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -8024.0000
+|   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0304
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 4.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  4.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0304
+|   |   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 11.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -8024.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [10.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.4922
+|   |   |   |   |   |   |   |   |--- REG_CITY_NOT_WORK_CITY <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [35.0000, 14.0000] class: 0
+|   |   |   |   |   |   |   |   |--- REG_CITY_NOT_WORK_CITY >  0.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [18.0000, 0.0000] class: 0
+|   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0050
+|   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.9929
+|   |   |   |   |   |--- weights: [0.0000, 125.0000] class: 1
+|   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.9929
+|   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 1.0042
+|   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.2214
+|   |   |   |   |   |   |   |--- weights: [21.0000, 14.0000] class: 0
+|   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.2214
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 261000.0000
+|   |   |   |   |   |   |   |   |--- weights: [17.0000, 7.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  261000.0000
+|   |   |   |   |   |   |   |   |--- weights: [36.0000, 0.0000] class: 0
+|   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  1.0042
+|   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 1.9936
+|   |   |   |   |   |   |   |--- weights: [0.0000, 45.0000] class: 1
+|   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  1.9936
+|   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 2.0180
+|   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -2750.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [29.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -2750.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [24.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  2.0180
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 2.9761
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 37.0000] class: 1
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  2.9761
+|   |   |   |   |   |   |   |   |   |--- FLAG_EMAIL <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- CNT_CHILDREN <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |   |   |--- CNT_CHILDREN >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- FLAG_EMAIL >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 0.0000] class: 0
+|   |   |--- EXT_SOURCE_1 >  0.4622
+|   |   |   |--- EXT_SOURCE_1 <= 0.6628
+|   |   |   |   |--- DAYS_ID_PUBLISH <= -4408.0000
+|   |   |   |   |   |--- ORGANIZATION_TYPE <= 41.5000
+|   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.5380
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.5392
+|   |   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 15.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -1593.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -1593.0000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -1144.6155
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [8.0000, 13.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -1144.6155
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |--- OWN_CAR_AGE >  15.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [5.0000, 10.0000] class: 1
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.5392
+|   |   |   |   |   |   |   |   |--- weights: [23.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.5380
+|   |   |   |   |   |   |   |--- weights: [25.0000, 0.0000] class: 0
+|   |   |   |   |   |--- ORGANIZATION_TYPE >  41.5000
+|   |   |   |   |   |   |--- AMT_CREDIT <= 265511.2500
+|   |   |   |   |   |   |   |--- weights: [91.0000, 1.0000] class: 0
+|   |   |   |   |   |   |--- AMT_CREDIT >  265511.2500
+|   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -1801.5000
+|   |   |   |   |   |   |   |   |--- weights: [33.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -1801.5000
+|   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 4.5000
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.5162
+|   |   |   |   |   |   |   |   |   |   |--- weights: [68.0000, 25.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.5162
+|   |   |   |   |   |   |   |   |   |   |--- weights: [15.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  4.5000
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 74250.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [19.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  74250.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [60.0000, 1.0000] class: 0
+|   |   |   |   |--- DAYS_ID_PUBLISH >  -4408.0000
+|   |   |   |   |   |--- FLAG_OWN_CAR <= 0.5000
+|   |   |   |   |   |   |--- OWN_CAR_AGE <= 9.9879
+|   |   |   |   |   |   |   |--- weights: [0.0000, 87.0000] class: 1
+|   |   |   |   |   |   |--- OWN_CAR_AGE >  9.9879
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 10.0204
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.4733
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9987
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0062
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 7
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0062
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 87.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9987
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE <= 11.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 9
+|   |   |   |   |   |   |   |   |   |   |--- OCCUPATION_TYPE >  11.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.4733
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -3690.5000
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 3.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 8
+|   |   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  3.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 5
+|   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -3690.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -1928.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [53.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -1928.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE >  10.0204
+|   |   |   |   |   |   |   |   |--- weights: [0.0000, 80.0000] class: 1
+|   |   |   |   |   |--- FLAG_OWN_CAR >  0.5000
+|   |   |   |   |   |   |--- NAME_INCOME_TYPE <= 1.5000
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 16.8246
+|   |   |   |   |   |   |   |   |--- weights: [99.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE >  16.8246
+|   |   |   |   |   |   |   |   |--- weights: [14.0000, 4.0000] class: 0
+|   |   |   |   |   |   |--- NAME_INCOME_TYPE >  1.5000
+|   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 247775.4766
+|   |   |   |   |   |   |   |   |--- NAME_EDUCATION_TYPE <= 1.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [60.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |--- NAME_EDUCATION_TYPE >  1.5000
+|   |   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 231966.0000
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.3366
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [27.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.3366
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [39.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_CREDIT >  231966.0000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -9243.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 7
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -9243.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [19.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  247775.4766
+|   |   |   |   |   |   |   |   |--- weights: [21.0000, 21.0000] class: 0
+|   |   |   |--- EXT_SOURCE_1 >  0.6628
+|   |   |   |   |--- DAYS_BIRTH <= -18028.0000
+|   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 5.5000
+|   |   |   |   |   |   |--- AMT_CREDIT <= 513981.0000
+|   |   |   |   |   |   |   |--- weights: [74.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- AMT_CREDIT >  513981.0000
+|   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -5978.0000
+|   |   |   |   |   |   |   |   |--- weights: [42.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -5978.0000
+|   |   |   |   |   |   |   |   |--- weights: [23.0000, 7.0000] class: 0
+|   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  5.5000
+|   |   |   |   |   |   |--- weights: [17.0000, 7.0000] class: 0
+|   |   |   |   |--- DAYS_BIRTH >  -18028.0000
+|   |   |   |   |   |--- weights: [116.0000, 0.0000] class: 0
+|--- EXT_SOURCE_2 >  0.5675
+|   |--- EXT_SOURCE_2 <= 0.6850
+|   |   |--- FLAG_PHONE <= 0.5000
+|   |   |   |--- FLAG_OWN_CAR <= 0.5000
+|   |   |   |   |--- OWN_CAR_AGE <= 10.0006
+|   |   |   |   |   |--- OWN_CAR_AGE <= 9.9997
+|   |   |   |   |   |   |--- weights: [0.0000, 521.0000] class: 1
+|   |   |   |   |   |--- OWN_CAR_AGE >  9.9997
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0002
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4584
+|   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE <= 3.5000
+|   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0145
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0073
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [13.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0073
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [9.0000, 38.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0145
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 12689.2373
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [25.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  12689.2373
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |--- NAME_HOUSING_TYPE >  3.5000
+|   |   |   |   |   |   |   |   |   |--- NAME_EDUCATION_TYPE <= 1.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [9.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- NAME_EDUCATION_TYPE >  1.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [42.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4584
+|   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH <= -4133.5000
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_6 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [28.0000, 11.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_6 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [96.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH >  -4133.5000
+|   |   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 229468.3672
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 5
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  229468.3672
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -54.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [76.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -54.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [7.0000, 3.0000] class: 0
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0002
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9978
+|   |   |   |   |   |   |   |   |--- weights: [0.0000, 555.0000] class: 1
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9978
+|   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE <= 0.0019
+|   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 5.5000
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.0015
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 17
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.0015
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 12
+|   |   |   |   |   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  5.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 87750.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [74.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  87750.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 8
+|   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE >  0.0019
+|   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE <= 0.9971
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 236.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE >  0.9971
+|   |   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE <= 1.0124
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE >  1.0124
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |--- OWN_CAR_AGE >  10.0006
+|   |   |   |   |   |--- weights: [0.0000, 696.0000] class: 1
+|   |   |   |--- FLAG_OWN_CAR >  0.5000
+|   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.0044
+|   |   |   |   |   |--- EXT_SOURCE_3 <= 0.7807
+|   |   |   |   |   |   |--- weights: [11.0000, 15.0000] class: 1
+|   |   |   |   |   |--- EXT_SOURCE_3 >  0.7807
+|   |   |   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |   |   |--- CNT_CHILDREN <= 1.5000
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 113395.1680
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 25026.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [31.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  25026.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [9.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [40.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [93.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  113395.1680
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_3 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |--- FLAG_DOCUMENT_8 >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 30620.2500
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [55.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  30620.2500
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |--- CNT_CHILDREN >  1.5000
+|   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -915.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [81.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -915.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [26.0000, 3.0000] class: 0
+|   |   |   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |   |   |--- weights: [109.0000, 2.0000] class: 0
+|   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.0044
+|   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.9970
+|   |   |   |   |   |   |--- weights: [0.0000, 93.0000] class: 1
+|   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.9970
+|   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 158763.4922
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE <= 14.1075
+|   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -1295.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [95.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -1295.5000
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.6251
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -2030.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [15.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -2030.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.6251
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 34506.1484
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [92.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  34506.1484
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [22.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |--- OWN_CAR_AGE >  14.1075
+|   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0300
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.1587
+|   |   |   |   |   |   |   |   |   |   |--- weights: [34.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.1587
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 25.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0300
+|   |   |   |   |   |   |   |   |   |--- weights: [41.0000, 1.0000] class: 0
+|   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  158763.4922
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 678141.4062
+|   |   |   |   |   |   |   |   |--- NAME_FAMILY_STATUS <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -1705.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [2.0000, 26.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -1705.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [14.0000, 19.0000] class: 1
+|   |   |   |   |   |   |   |   |--- NAME_FAMILY_STATUS >  0.5000
+|   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 190125.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [8.0000, 36.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  190125.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [29.0000, 16.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.0056
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.0056
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  678141.4062
+|   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE <= 0.1595
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE <= 2.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [48.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE >  2.0000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -6562.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [36.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -6562.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |--- DEF_60_CNT_SOCIAL_CIRCLE >  0.1595
+|   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 16.0000] class: 0
+|   |   |--- FLAG_PHONE >  0.5000
+|   |   |   |--- EXT_SOURCE_1 <= 0.4640
+|   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0318
+|   |   |   |   |   |--- DAYS_BIRTH <= -15466.5000
+|   |   |   |   |   |   |--- weights: [23.0000, 19.0000] class: 0
+|   |   |   |   |   |--- DAYS_BIRTH >  -15466.5000
+|   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.1731
+|   |   |   |   |   |   |   |--- weights: [17.0000, 12.0000] class: 0
+|   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.1731
+|   |   |   |   |   |   |   |--- AMT_ANNUITY <= 24561.0000
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -10988.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 11.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -10988.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [41.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |--- AMT_ANNUITY >  24561.0000
+|   |   |   |   |   |   |   |   |--- weights: [72.0000, 1.0000] class: 0
+|   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0318
+|   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.9948
+|   |   |   |   |   |   |--- weights: [0.0000, 27.0000] class: 1
+|   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.9948
+|   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0306
+|   |   |   |   |   |   |   |--- AMT_ANNUITY <= 55438.4160
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.0266
+|   |   |   |   |   |   |   |   |   |--- weights: [33.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.0266
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 1.9744
+|   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 12.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  1.9744
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 16161.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [23.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  16161.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |--- AMT_ANNUITY >  55438.4160
+|   |   |   |   |   |   |   |   |--- weights: [0.0000, 11.0000] class: 1
+|   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0306
+|   |   |   |   |   |   |   |--- weights: [32.0000, 2.0000] class: 0
+|   |   |   |--- EXT_SOURCE_1 >  0.4640
+|   |   |   |   |--- EXT_SOURCE_1 <= 0.7163
+|   |   |   |   |   |--- NAME_INCOME_TYPE <= 6.5000
+|   |   |   |   |   |   |--- NAME_INCOME_TYPE <= 4.5000
+|   |   |   |   |   |   |   |--- NAME_TYPE_SUITE <= 6.5000
+|   |   |   |   |   |   |   |   |--- NAME_TYPE_SUITE <= 1.5000
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.6414
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0149
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [16.0000, 9.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0149
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [40.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.6414
+|   |   |   |   |   |   |   |   |   |   |--- weights: [48.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- NAME_TYPE_SUITE >  1.5000
+|   |   |   |   |   |   |   |   |   |--- NAME_TYPE_SUITE <= 4.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [5.0000, 25.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- NAME_TYPE_SUITE >  4.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 485851.2812
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [20.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  485851.2812
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [15.0000, 14.0000] class: 0
+|   |   |   |   |   |   |   |--- NAME_TYPE_SUITE >  6.5000
+|   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9303
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0094
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0094
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 20.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9303
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 23541.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [152.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  23541.7500
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 5
+|   |   |   |   |   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [55.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- NAME_INCOME_TYPE >  4.5000
+|   |   |   |   |   |   |   |--- weights: [0.0000, 15.0000] class: 1
+|   |   |   |   |   |--- NAME_INCOME_TYPE >  6.5000
+|   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 0.0109
+|   |   |   |   |   |   |   |--- DAYS_BIRTH <= -19277.0000
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 <= 0.6263
+|   |   |   |   |   |   |   |   |   |--- weights: [26.0000, 10.0000] class: 0
+|   |   |   |   |   |   |   |   |--- EXT_SOURCE_2 >  0.6263
+|   |   |   |   |   |   |   |   |   |--- weights: [41.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- DAYS_BIRTH >  -19277.0000
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 159750.0000
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 30186.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [166.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  30186.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [34.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  159750.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [122.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  0.0109
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4690
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE <= 1.9799
+|   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY <= 0.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [8.0000, 11.0000] class: 1
+|   |   |   |   |   |   |   |   |   |--- FLAG_OWN_REALTY >  0.5000
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE <= 0.0217
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [26.0000, 12.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- REGION_POPULATION_RELATIVE >  0.0217
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [29.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- OBS_30_CNT_SOCIAL_CIRCLE >  1.9799
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 12.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -1570.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [24.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -1570.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  12.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH <= -3487.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [33.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH >  -3487.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [61.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4690
+|   |   |   |   |   |   |   |   |--- weights: [60.0000, 1.0000] class: 0
+|   |   |   |   |--- EXT_SOURCE_1 >  0.7163
+|   |   |   |   |   |--- DAYS_ID_PUBLISH <= -2156.5000
+|   |   |   |   |   |   |--- weights: [132.0000, 0.0000] class: 0
+|   |   |   |   |   |--- DAYS_ID_PUBLISH >  -2156.5000
+|   |   |   |   |   |   |--- weights: [46.0000, 3.0000] class: 0
+|   |--- EXT_SOURCE_2 >  0.6850
+|   |   |--- EXT_SOURCE_2 <= 0.7221
+|   |   |   |--- FLAG_PHONE <= 0.5000
+|   |   |   |   |--- FLAG_OWN_CAR <= 0.5000
+|   |   |   |   |   |--- OWN_CAR_AGE <= 9.9994
+|   |   |   |   |   |   |--- weights: [0.0000, 53.0000] class: 1
+|   |   |   |   |   |--- OWN_CAR_AGE >  9.9994
+|   |   |   |   |   |   |--- OWN_CAR_AGE <= 10.0499
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4625
+|   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED <= -273.5000
+|   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE <= 0.9814
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 160291.2188
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [15.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  160291.2188
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |   |   |   |--- DEF_30_CNT_SOCIAL_CIRCLE >  0.9814
+|   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_EMPLOYED >  -273.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [25.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4625
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH <= -23063.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [105.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_BIRTH >  -23063.0000
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.0163
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.6705
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 10
+|   |   |   |   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.6705
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.0163
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE <= 0.9889
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 26.0000] class: 1
+|   |   |   |   |   |   |   |   |   |   |--- OBS_60_CNT_SOCIAL_CIRCLE >  0.9889
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 9
+|   |   |   |   |   |   |--- OWN_CAR_AGE >  10.0499
+|   |   |   |   |   |   |   |--- weights: [0.0000, 50.0000] class: 1
+|   |   |   |   |--- FLAG_OWN_CAR >  0.5000
+|   |   |   |   |   |--- DAYS_EMPLOYED <= -411.0000
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9820
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0269
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 218250.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  218250.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [24.0000, 11.0000] class: 0
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0269
+|   |   |   |   |   |   |   |   |--- weights: [0.0000, 11.0000] class: 1
+|   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9820
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.0083
+|   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 13.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [127.0000, 1.0000] class: 0
+|   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  13.5000
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 31198.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [35.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  31198.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 36036.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [6.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  36036.0000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [37.0000, 2.0000] class: 0
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.0083
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.9343
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 11.0000] class: 1
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.9343
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL <= 106129.7578
+|   |   |   |   |   |   |   |   |   |   |--- weights: [9.0000, 6.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- AMT_INCOME_TOTAL >  106129.7578
+|   |   |   |   |   |   |   |   |   |   |--- weights: [97.0000, 5.0000] class: 0
+|   |   |   |   |   |--- DAYS_EMPLOYED >  -411.0000
+|   |   |   |   |   |   |--- weights: [117.0000, 2.0000] class: 0
+|   |   |   |--- FLAG_PHONE >  0.5000
+|   |   |   |   |--- FLAG_DOCUMENT_8 <= 0.5000
+|   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START <= 4.5000
+|   |   |   |   |   |   |--- DAYS_EMPLOYED <= -163.5000
+|   |   |   |   |   |   |   |--- DAYS_REGISTRATION <= -3243.0039
+|   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START <= 17.5000
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE <= 6.5000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY <= 19401.4980
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [17.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- AMT_ANNUITY >  19401.4980
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |   |   |   |   |--- NAME_INCOME_TYPE >  6.5000
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE <= -1494.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- weights: [37.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |   |   |--- DAYS_LAST_PHONE_CHANGE >  -1494.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |   |   |   |   |--- HOUR_APPR_PROCESS_START >  17.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [32.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- DAYS_REGISTRATION >  -3243.0039
+|   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 452250.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [38.0000, 5.0000] class: 0
+|   |   |   |   |   |   |   |   |--- AMT_CREDIT >  452250.0000
+|   |   |   |   |   |   |   |   |   |--- weights: [57.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- DAYS_EMPLOYED >  -163.5000
+|   |   |   |   |   |   |   |--- weights: [93.0000, 2.0000] class: 0
+|   |   |   |   |   |--- WEEKDAY_APPR_PROCESS_START >  4.5000
+|   |   |   |   |   |   |--- weights: [216.0000, 8.0000] class: 0
+|   |   |   |   |--- FLAG_DOCUMENT_8 >  0.5000
+|   |   |   |   |   |--- weights: [84.0000, 0.0000] class: 0
+|   |   |--- EXT_SOURCE_2 >  0.7221
+|   |   |   |--- OWN_CAR_AGE <= 10.1095
+|   |   |   |   |--- NAME_CONTRACT_TYPE <= 0.5000
+|   |   |   |   |   |--- NAME_HOUSING_TYPE <= 2.5000
+|   |   |   |   |   |   |--- OCCUPATION_TYPE <= 3.5000
+|   |   |   |   |   |   |   |--- weights: [286.0000, 0.0000] class: 0
+|   |   |   |   |   |   |--- OCCUPATION_TYPE >  3.5000
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.0327
+|   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH <= -3463.5000
+|   |   |   |   |   |   |   |   |   |--- weights: [249.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH >  -3463.5000
+|   |   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH <= -3348.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [7.0000, 3.0000] class: 0
+|   |   |   |   |   |   |   |   |   |--- DAYS_ID_PUBLISH >  -3348.5000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [191.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.0327
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 1.9966
+|   |   |   |   |   |   |   |   |   |--- weights: [0.0000, 13.0000] class: 1
+|   |   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  1.9966
+|   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE <= 1185750.0000
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT <= 835339.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 10
+|   |   |   |   |   |   |   |   |   |   |--- AMT_CREDIT >  835339.5000
+|   |   |   |   |   |   |   |   |   |   |   |--- truncated branch of depth 4
+|   |   |   |   |   |   |   |   |   |--- AMT_GOODS_PRICE >  1185750.0000
+|   |   |   |   |   |   |   |   |   |   |--- weights: [128.0000, 0.0000] class: 0
+|   |   |   |   |   |--- NAME_HOUSING_TYPE >  2.5000
+|   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4034
+|   |   |   |   |   |   |   |--- weights: [17.0000, 16.0000] class: 0
+|   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4034
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 <= 0.4708
+|   |   |   |   |   |   |   |   |--- weights: [62.0000, 0.0000] class: 0
+|   |   |   |   |   |   |   |--- EXT_SOURCE_1 >  0.4708
+|   |   |   |   |   |   |   |   |--- weights: [21.0000, 4.0000] class: 0
+|   |   |   |   |--- NAME_CONTRACT_TYPE >  0.5000
+|   |   |   |   |   |--- weights: [264.0000, 0.0000] class: 0
+|   |   |   |--- OWN_CAR_AGE >  10.1095
+|   |   |   |   |--- FLAG_OWN_CAR <= 0.5000
+|   |   |   |   |   |--- weights: [0.0000, 29.0000] class: 1
+|   |   |   |   |--- FLAG_OWN_CAR >  0.5000
+|   |   |   |   |   |--- NAME_EDUCATION_TYPE <= 2.5000
+|   |   |   |   |   |   |--- weights: [95.0000, 0.0000] class: 0
+|   |   |   |   |   |--- NAME_EDUCATION_TYPE >  2.5000
+|   |   |   |   |   |   |--- ORGANIZATION_TYPE <= 19.5000
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS <= 2.3327
+|   |   |   |   |   |   |   |   |--- weights: [60.0000, 4.0000] class: 0
+|   |   |   |   |   |   |   |--- CNT_FAM_MEMBERS >  2.3327
+|   |   |   |   |   |   |   |   |--- weights: [19.0000, 14.0000] class: 0
+|   |   |   |   |   |   |--- ORGANIZATION_TYPE >  19.5000
+|   |   |   |   |   |   |   |--- weights: [132.0000, 4.0000] class: 0
